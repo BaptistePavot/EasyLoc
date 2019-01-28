@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="jumbotron h-100 pt-2">
+
+
+        <div class="row justify-content-center mb-2">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2 border-danger" type="text" placeholder="Objets ou catégories">
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Rechercher</button>
+            </form>
+        </div>
+        <hr>
+        <div class="row justify-content-center mb-2 ">
+            <h2 style="color: red">Appareil disponible</h2>
+        </div>
+
+        <div class="row justify-content-center">
+            {% for objet in objets %}
+                {% if objet.user.id != app.user.id %}
+                    <div class="card text-white bg-primary mb-3 " style="width: 15rem;">
+                        <div class="card-header text-center">{{ objet.category.name }}</div>
+                        <div class="card-body p-3">
+                            <h4 class="card-title text-center">{{ objet.name|capitalize }}</h4>
+                            <div class="row justify-content-center ">
+                                <img src="{{ asset('./Images/'~objet.image) }}" height="125px" width="150px" class="rounded-circle">
+                            </div>
+                            <p class="card-text text-center">{{ objet.description }}</p>
+                            <div class="row justify-content-center ">
+                                <button class="btn btn-secondary mb-2" onclick="">Louer</button>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+    <div class="jumbotron h-100">
+    <div class="row h-100">
+        <div class="col-5 mx-auto">
+            <div class="jumbotron h-100">
+                <div class="card border-dark">
+                    <h2 class="row justify-content-center">Ajouter un objet</h2>
+                    {{ form_start(form) }}
+                    <div class="card-header">{{ form_row(form.category) }}</div>
+                    <div class="card-body">
+                        <h4 class="card-title">{{ form_row(form.name,{'label' : 'Nom de l\'objet','attr' : {'placeholder' : 'Nom de l\'objet...'}}) }}</h4>
+                        {{ form_row(form.image,{'label' : 'Image','attr' : {'placeholder' : 'Image de l\'objet...'}}) }}
+                        <p class="card-text">{{ form_row(form.description,{'label' : 'Description','attr' : {'placeholder' : 'Description de l\'objet...'}}) }}</p>
+                        <div class="row justify-content-center">
+                            <a class="btn btn-primary" href="{{ path('user_list_lend') }}">Retour</a>
+                            <button class="btn btn-secondary" type="submit">Valider</button>
+                        </div>
+                        {{ form_end(form) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

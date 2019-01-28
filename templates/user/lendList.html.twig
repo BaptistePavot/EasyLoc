@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="jumbotron h-100 pt-2">
+
+
+    <div class="row justify-content-center mb-2">
+        <a class="btn btn-primary" href="{{ path('user_home') }}">Retour</a>
+        <a class="btn btn-secondary ml-2" href="{{ path('user_add_objet') }}">Ajouter un objet</a>
+    </div>
+    <hr>
+    <div class="row justify-content-center">
+
+
+    {% if objets is defined %}
+                {% for objet in objets %}
+                    <div class="card text-white bg-primary mb-3" style="width: 15rem;">
+                        <div class="card-header text-center">{{ objet.category.name }}</div>
+                        <div class="card-body p-3">
+                            <h4 class="card-title text-center">{{ objet.name|capitalize }}</h4>
+                            <div class="row justify-content-center ">
+                                <img src="{{ asset('./Images/'~objet.image) }}" height="125px" width="150px" class="rounded-circle">
+                            </div>
+                            <p class="card-text text-center">{{ objet.description }}</p>
+                            <div class="row justify-content-center ">
+                                <button class="btn btn-primary mb-2" onclick="showModalDelObjet('{{ path('user_del_objet',{'id': objet.id}) }}','{{ objet.name }}')">Supprimer</button>
+                                <a class="btn btn-secondary mb-2" href="{{ path('user_update_objet',{'id' : objet.id}) }}">Modifier</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                {% endfor %}
+
+            {% else %}
+
+                    <div class="row justify-content-center">
+                        <p class="text-primary">Vous avez aucun objet en prêt</p>
+                    </div>
+
+
+            {% endif %}
+
+
+    </div>
+</div>
+
+    <div class="modal" id="modalDel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Suppression</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="hideModal('modalDel')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="jumbotron">
+
+                        <h4 id="texteModalDelObjet">Voulez vous vraiment supprimer l'objet "</h4>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="btnSuppObjet"> Valider</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="hideModal('modalDel')">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        //$id id du fichier ou dossier , type = 1 si fichier 0 si dossier
+        function showModalDelObjet(lien,nom)
+        {
+            document.getElementById('texteModalDelObjet').innerHTML += nom+"\" ?";
+
+
+            document.getElementById('texteModalDelObjet').innerHTML ;
+            document.getElementById('btnSuppObjet').addEventListener("click",function () {
+                window.location.href = lien
+            });
+            document.getElementById('modalDel').style.display = "block";
+        }
+
+        function hideModal(modal)
+        {
+            document.getElementById(modal).style.display = "none";
+            if (modal ==="modalDel")
+            {
+                document.getElementById('texteModalDelObjet').innerHTML = "Voulez vous vraiment supprimer l'objet \"";
+            }
+        }
+    </script>
+{% endblock %}
